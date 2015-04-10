@@ -1,0 +1,221 @@
+{% extends "base_admin.html" %}
+{% block extrascript %}
+<script src="{{ STATIC_URL }}js/frontend/adminaccount.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+   <div class="row">
+    <h2>Administer your account:</h2>
+    Add new user or change your information
+    <h5 style="color:green" class="message" >{{message}}</h5>
+  </div>
+	<div class="row">
+		<div class="col-lg-3 col-lg-offset-1" id="button-admin-user">
+			<a href="#" data-toggle="modal">
+				<button id="box-newuser" class="box-option btn btn-default">
+					Create new admin user
+				</button>
+			</a>
+		</div>
+    <div class="col-lg-3">
+      <a href="#" data-toggle="modal">
+        <button id="box-trainer-newuser" class="box-option btn btn-default">
+          Create new trainer user
+        </button>
+      </a>
+    </div>
+    <div class="col-lg-3">
+      <a href="#" >
+        <button id="box-settings-account" class="box-option btn btn-default">
+          Change your settings
+        </button>
+      </a>
+    </div>
+</div>
+		<!-- Take the project from the database -->
+  <div class="row">
+
+    <div class="form-horizontal">
+    <!-- Take the project from the database -->
+    <fieldset class=" well">
+      <div id="create-user" style="display:none;">
+        <form method="POST" action="{%url 'admin_account_menu' %}" >
+          {% csrf_token %}
+          <legend>Create a new admin user:</legend>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+                    <div class="warning-message"></div>
+                    <label for="inputName" class="col-lg-2 col-md-2 col-sm-2 control-label">Name:</label>
+                    <input type="text" required="required" class="form-control input-small" name="name" maxlength="30" id="inputName" placeholder="Name..."> 
+                  
+                    <div class="warning-message"></div>
+                    <label for="inputSurname" class="col-lg-2 col-md-2 col-sm-2 control-label">Surname</label>
+                    <input type="text" required="required" class="form-control input-small" name="surname" maxlength="150" id="inputSurname" placeholder="Surname...">                 
+                    <div class="warning-message">{{message_user}}</div>
+                    <label for="inputUsername" class="col-lg-2 col-md-2 col-sm-2 control-label">Username:</label>
+                    <input type="text" required="required" class="form-control input-small" name="username" maxlength="20" id="inputUsername" placeholder="Username..."> 
+
+                      
+                    <label for="inputPassword" class="col-lg-2 col-md-2 col-sm-2 control-label">Password</label>
+                    <input type="password" required="required" class="form-control input-small password" name="password" maxlength="255" id="inputPassword" placeholder="Password..."> 
+                    <div class="warning-password-message"></div>
+                     
+                    <label for="inputPasswordConfirm" class="col-lg-2 col-md-2 col-sm-2 control-label">Repeat password</label>
+                    <input type="password" required="required" class="form-control input-small password" name="passwordconfirm" maxlength="255" id="inputPasswordConfirm" placeholder="Repeat password...">                 
+                    <div class="warning-password-message"></div>
+
+                  </div>
+             
+              <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+
+                    <b>Allow to have access to the stories and libraries</b>
+                    <div class="checkbox" style="max-height:350px;autoflow-y:auto;">
+                      <b>Unpublish stories:</b>
+                      {% for story in userstories_nopublish %}
+                        <div><input type="checkbox" name="stories"  value="{{story.id}}">{{story.name}}</div>
+                      {% endfor %}
+                      <br>
+                      <b> Publish stories: </b>
+                      {% for story in userstories_publish %}
+                        <div><input type="checkbox" name="stories"  value="{{story.id}}">{{story.name}}</div>
+                      {% endfor %}
+                      <br>
+                      <b> Libraries to add: </b>
+                        {% for library in library_user %}
+                          <div><input type="checkbox" name="libraries"  value="{{library.id}}">{{library.name}}</div>
+                        {% endfor %}
+
+                    </div>
+              </div>
+            </div>
+            <input type="hidden" value="{{userLogin.id}}" name="create-user">
+              <div class="form-group">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+                  <button type="submit" id="save" class="btn btn-primary" disabled>Save</button>
+                </div>
+              </div>
+        </form>
+
+      </div>
+       <div id="create-trainer" style="display:none;">
+        <form method="POST" action="{%url 'admin_account_menu' %}" >
+          {% csrf_token %}
+          <legend>Create a new trainer user:</legend>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+
+                    <div class="warning-message"></div>
+                    <label for="inputTrainerName" class="col-lg-2 col-md-2 col-sm-2 control-label">Name:</label>
+                    <input type="text" required="required" class="form-control input-small" name="name" maxlength="30" id="inputTrainerName" placeholder="Name..."> 
+                  
+                    <div class="warning-message"></div>
+                    <label for="inputTrainerSurname" class="col-lg-2 col-md-2 col-sm-2 control-label">Surname</label>
+                    <input type="text" required="required" class="form-control input-small" name="surname" maxlength="150" id="inputTrainerSurname" placeholder="Surname...">
+
+                    <div class="warning-message">{{message_user}}</div>
+                    <label for="inputTrainerUsername" class="col-lg-2 col-md-2 col-sm-2 control-label">Username:</label>
+                    <input type="text" required="required" class="form-control input-small" name="username" maxlength="20" id="inputTrainerUsername" placeholder="Username..."> 
+
+                      
+                      <label for="inputTrainerPassword" class="col-lg-2 col-md-2 col-sm-2 control-label">Password</label>
+                      <input type="password" required="required" class="form-control input-small trainer-password" name="password" maxlength="255" id="inputTrainerPassword" placeholder="Password..."> 
+                      <div class="warning-password-message"></div>
+                      
+                      <label for="inputTrainerPasswordConfirm" class="col-lg-2 col-md-2 col-sm-2 control-label">Repeat password</label>
+                      <input type="password" required="required" class="form-control input-small trainer-password" name="passwordconfirm" maxlength="255" id="inputTrainerPasswordConfirm" placeholder="Repeat password...">
+                      <div class="warning-password-message"></div>                 
+
+                </div>
+                <div id="show-trainer-content" class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+
+                    <b>Allow to have access to the stories and libraries</b>
+                    <div class="checkbox" style="max-height:350px;autoflow-y:auto;">
+                      <b>Unpublish stories:</b>
+                      {% for story in userstories_nopublish %}
+                        <div><input type="checkbox" name="stories"  value="{{story.id}}">{{story.name}}</div>
+                      {% endfor %}
+                      <br>
+                      <b> Publish stories: </b>
+                      {% for story in userstories_publish %}
+                        <div><input type="checkbox" name="stories"  value="{{story.id}}">{{story.name}}</div>
+                      {% endfor %}
+                      <br>
+                      <b> Libraries to add: </b>
+                        {% for library in library_user %}
+                          <div><input type="checkbox" name="libraries"  value="{{library.id}}">{{library.name}}</div>
+                        {% endfor %}
+                </div>
+              </div>
+                           
+            </div>
+            <input type="hidden" value="{{userLogin.id}}" name="create-trainer">
+              <div class="form-group">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+                  <button type="submit" id="trainer-save" class="btn btn-primary" disabled>Save</button>
+                </div>
+              </div>
+        </form>
+
+      </div>
+      <div id="change-settings" style="display:none;">
+        <form method="POST" action="{%url 'admin_account_menu' %}" >
+          {% csrf_token %}
+          <legend>Modify your settings:</legend>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+                  <div class="warning-message"></div>
+                    <label for="inputLoginName" class="col-lg-2 col-md-2 col-sm-2 control-label">Name:</label>
+                    <input type="text" value="{{userLogin.first_name}}" class="form-control input-small" name="name" maxlength="30" id="inputLoginName" placeholder="Name"> 
+                  </div>
+              </div>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+                  <div class="warning-message"></div>
+                    <label for="inputLoginSurname" class="col-lg-2 col-md-2 col-sm-2 control-label">Surname</label>
+                    <input type="text" required="required" value="{{userLogin.last_name}}"class="form-control input-small" name="surname" maxlength="150" id="inputLoginSurname" placeholder="Surname">                 
+                  </div>
+              </div>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+                  <div class="warning-message">{{loginmessage}}</div>
+                    <label for="inputLoginUsername" class="col-lg-2 col-md-2 col-sm-2 control-label">Username:</label>
+                    <input type="text" required="required" value="{{userLogin.username}}" class="form-control input-small" name="username" maxlength="20" id="inputLoginUsername" placeholder="Username" readonly> 
+                  </div>
+              </div>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+                    <div class="warning-message">{{loginmessage}}</div> 
+                    <label for="inputCurrentPassword" class="col-lg-2 col-md-2 col-sm-2 control-label">Current Password</label>
+                    <input type="password" required="required" class="form-control input-small login-password" name="currentpassword" maxlength="255" id="inputCurrentPassword" placeholder="Password..."> 
+                </div>
+              </div>
+              <br>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+                  <div class="warning-message"></div>
+                    <label for="inputLoginPassword" class="col-lg-2 col-md-2 col-sm-2 control-label">Change Password</label>
+                    <input type="password" required="required" class="form-control input-small login-password" name="password" maxlength="255" id="inputLoginPassword" placeholder="Password..."> 
+                </div>
+              </div>
+              <div class="form-group">              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+                    <div class="warning-message"></div>
+                    <label for="inputLoginPasswordConfirm" class="col-lg-2 col-md-2 col-sm-2 control-label">Repeat password</label>
+                    <input type="password" required="required" class="form-control input-small login-password" name="passwordconfirm" maxlength="255" id="inputLoginPasswordConfirm" placeholder="Repeat password...">                 
+                  </div>
+              </div>
+              <input type="hidden" value="{{userLogin.id}}" name="change-user">
+              <div class="form-group">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+                  <button type="submit" id="loginSave" class="btn btn-primary" disabled>Save</button>
+                </div>
+              </div>
+        </form>
+      </div>
+    </fieldset>
+    </div>
+  </div>
+  <input type="hidden" id="saved-type" value="{{type}}">
+  <input type="hidden" id="is-trainer" value="{{istrainer}}">
+</div>
+{% endblock %}

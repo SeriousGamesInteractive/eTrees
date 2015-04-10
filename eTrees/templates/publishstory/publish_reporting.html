@@ -1,0 +1,41 @@
+{% extends "base_admin.html" %}
+
+{% block extracss %}
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/publish_reporting.css"/>
+
+{% endblock %}
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/d3.v3.min.js" charset="utf-8"></script>
+  <script src="{{ STATIC_URL }}js/frontend/publish_reporting.js"></script>
+  <script src="{{ STATIC_URL }}js/frontend/publish_reporting_chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12" style = "text-align:center;">
+  	   <h3> Reporting section of publish stories with users.</h3>
+  	   <h4> Select the user to see the report document. </h4>
+    </div>
+    <div class="warning-message">{{message_import_error}}</div>
+    <div class="success-message">{{message_success}}</div>
+  	<div class="row" id="container">
+
+      <div id="story-view" class="form-horizontal">
+        <!-- Take the project from the database -->
+        <h4> Stories: </h4>
+        <fieldset class="list-elements well">
+          {% for story in completeStories %}
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <button id="story-{{story.id}}"class="box-unfinish btn btn-success">
+                {{story.name}}
+                </button>
+            </div>  
+          {% endfor %}     
+        </fieldset>
+      </div>
+    </div>
+  
+  </div>
+</div>
+{% endblock %}

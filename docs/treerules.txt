@@ -1,0 +1,5 @@
+
+1. One initial node, not possible to be connected.
+2. Several end nodes without any possibility of conenction to.
+3. If you add nodes to the stage you must connect them. 
+4. 

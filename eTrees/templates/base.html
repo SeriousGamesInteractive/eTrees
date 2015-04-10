@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- mobile responsive -->
+<title>{% block title %} eTrees {% endblock %}</title>
+
+<link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/normalize.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/base.css"/>
+{% block extracss %}
+    
+{% endblock %}
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/respond.min.js"></script> <!-- Use for IE8 and lower -->
+<script src="{{ STATIC_URL }}js/csrf.js"></script>
+<!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+	
+	/* hide from ie on mac \*/
+	html {
+		height: 100%;
+		overflow: hidden;
+	}
+	
+	#flashcontent {
+		height: 100%;
+	}
+	/* end hide */
+
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+</style>
+{% block extrascript %} {% endblock extrascript %}
+
+{% block extra-head %} {% endblock extra-head %}
+ <noscript>The use of this website require javascript, please activate the javascript option
+ or use a browser with javascript support</noscript>
+</head>
+<body>
+
+	{% block content %}
+    {% endblock content%}
+	
+	{% block footer %}
+  
+	{% endblock footer%} 
+	 
+</body>
+</html>

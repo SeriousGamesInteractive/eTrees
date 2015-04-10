@@ -1,0 +1,90 @@
+{% extends "base_admin.html" %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/publishbase.css"/>
+{% endblock %}
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/frontend/publishinviteuser.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+	<h3> Invite user(s) to stories</h3>
+	<h4> Assign user(s) to the stories created. </h4>
+  <h6> *Select the user that you want to add and then the story.</h6>
+	<div class="col-lg-4">
+    <div class="form-horizontal">
+    <!-- Take the project from the database -->
+    <h4> Users: </h4>
+    <div class="col-lg-6" >
+      <input type="text" class="form-control" name="search_user"  id="inputSearchUser" placeholder="Search username"> 
+    </div>
+    <div class="col-lg-6" >
+       <button class="btn btn-warning" id="select-aĺl">Select all</button>
+    </div>
+      <div id="usergame-container">
+        <ul class="list">
+       {% for user in users %}
+          <li >
+            <div class="col-lg-10 user_invite" id="user-{{user.id}}">
+                <div class="user-name" style="display:none;">{{user.name}}</div>
+                <div class="user-surname" style="display:none;">{{user.surname}}</div>
+                <div class="user-username" style="display:none;">{{user.username}}</div>
+                {% if user.sex == 'm'%}
+                  <img src="{{MEDIA_URL}}male_symbol.png" width="30" height="36">
+                {% else %}
+                  <img src="{{MEDIA_URL}}female_symbol.png" width="35" height="50">
+                {% endif %}
+                 {{user.name}} {{user.surname}} ({{user.username}})
+                <div class="invite-button">
+                  <button class="btn btn-primary btn-user-not-add" id="user-{{user.id}}">Add</button>
+                  <input type="hidden" value="{{user.name}}" id="nameuser-{{user.id}}">
+                  <input type="hidden" value="{{user.surname}}" id="surnameuser-{{user.id}}">
+                </div>
+            </div>  
+          </li>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+
+    <div class="form-horizontal">
+    <!-- Take the project from the database -->
+      <h4> Stories: </h4>
+
+      <div class="col-lg-12">
+      <fieldset class="list-elements well" style="margin-top:10px;">
+        {% for story,projectvaloration in zipped %}
+          <div class="col-lg-3">
+            <div class="icon-num-users">
+              <i class="glyphicon glyphicon-user" id="user_story-{{story.id}}"> {{projectvaloration}} participants</i>
+            </div>           
+            <button class="box-story btn btn-success publish-stories"  id="story-{{story.id}}">
+              {{story.name}}                
+            </button>           
+          </div>  
+        {% endfor %}     
+      </fieldset>
+      </div>
+    </div>
+  </div>	
+  </div>
+</div>
+
+<div class="modal fade" id="modal-invite-users" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+   <div class="modal-content"> 
+      <div class="modal-body">
+         
+      </div>
+      <div class="modal-footer" style="margin-top:-10px;">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

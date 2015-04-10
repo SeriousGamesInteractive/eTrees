@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- mobile responsive -->
+<title>{% block title %} eTrees Accounts {% endblock %}</title>
+
+<link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/normalize.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/admin.css"/>
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
+
+<script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+<script src="{{ STATIC_URL }}js/respond.min.js"></script> <!-- Use for IE8 and lower -->
+<script src="{{ STATIC_URL }}js/frontend/admin.js"></script>
+<!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+{% block extrascript %}
+    
+{% endblock %}
+
+{% block extra-head %}{% endblock %}
+ <noscript>The use of this website require javascript, please activate the javascript option
+ or use a browser with javascript support</noscript>
+</head>
+<body>
+	{% block navigation-bar %}
+	<div class="container-fluid">
+		<div class="row-fluid"> 
+			<div class="col-lg-offset-5">
+				<h2>eTrees (add icon app)<h2>
+			</div>
+		</div>
+	</div>
+		<div class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#"> Home</a>
+				<ul class="nav navbar-nav">
+					<li><a href="#"> Story Builder </a>
+					<li><a href="#">Aministrator accounts</a>
+					<li><a href="{% url admin_library %}">Libraries</a>
+					<li><a href="{% url playground %}">Playground</a>
+				</ul>
+				<p class="navbar-text pull-right">Signed in as <a href="#" class="navbar-link">"{{user.username}}"</a></p>
+			</div>
+		</div>
+	{% endblock %}
+	{% block content %}
+    {% endblock%}
+	
+	{% block footer %}
+  
+	{% endblock %} 
+	 
+</body>
+</html>

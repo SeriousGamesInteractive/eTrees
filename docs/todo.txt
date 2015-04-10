@@ -1,0 +1,19 @@
+1. Communication between flash and backend in the story builder.✓
+	- Send a POST with the content of a bitmap (screenshot of the node) and the xml file with the content of the node.
+
+
+2. Define the user privileges for the administration of the libraries.
+	- ?? each admin has accessed to all the libraries or just the one that they have created?? 
+	- Should it be possible to asign new admin user to libraries?
+
+3. Obtain the connection of the nodes after saving. ✓
+
+
+4. DELETE node. know what kind of data has to be remove. 
+	The xml file created by the storybuilder. The connection created in the tree connection tool.
+
+5. Import users using CSV files ( implemented not test it)
+
+6. Create a unique url for the user and the story. (Partial implementation)
+
+7. Send an email with the url 

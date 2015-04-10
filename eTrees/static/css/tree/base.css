@@ -1,0 +1,54 @@
+
+#node_list{
+    /*background-color: #777;*/
+    display: inline-block;
+    max-width: 200px;
+    max-height: 700px;
+}
+#canvas {
+    /*background-color: #222;*/
+    display: inline-block;
+    width: 1000px;
+    height: 700px;
+    border:solid 1px red;
+}
+.kineticjs-content{
+    left:-15px;
+}
+#info_canvas{
+    /*background-color: #222;*/
+    display: inline-block;
+    height: 500px;
+    border:solid 1px blue;
+}
+
+
+/* DESIGN OF THE LIST OF NODES*/
+#head_list{
+    text-align:center;
+    background:#D6DAEE;
+    text-align:24px;
+    font-weight: bold;
+    height:30px;
+    border-radius: 10px;
+
+}
+.element_list{
+    margin-top: 5px;
+    text-align:center;
+    background-color:#aaaaaa;
+    font-size:14px;
+    width:100%;
+}
+.element_list_activate{
+    margin-top: 5px;
+    text-align:center;
+    font-size:14px;
+    width:100%;
+}
+
+/* change modal size */
+
+#nodeModal .modal-dialog {
+    width:905px;
+}

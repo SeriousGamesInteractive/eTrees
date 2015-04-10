@@ -1,0 +1,269 @@
+{% extends "base_admin.html" %}
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/create_edit_story.css"/>
+{% endblock %}
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/frontend/editstory.js"></script>
+<script src="{{ STATIC_URL }}js/jcolor/jscolor.js"></script>{% endblock extrascript %}
+{% block content %}
+<div class="container">
+   <div class="row">
+    <h2> <a href="{% url 'edit_story_form' story.id %}" title="Setting story" style="text-decoration:none;"><i class="glyphicon glyphicon-cog icon-setting" id="story_{{story.id}}"></i></a>{{story.name}}</h2>
+     <div id="temp-message" style="color:green;"><h4>{{message_success}}</h4></div>
+     <div id="temp-message-error" style="color:red;">{{message_error}}</div>
+    Creation of the nodes for the story and the connection between them.
+   
+  </div>
+	<div class="row">
+		<div class="col-lg-3">
+			<a href="#newstoryModal" data-toggle="modal">
+				<button id="box-newnode" class="box-option btn btn-default">
+					Create a new node
+				</button>
+			</a>
+		</div>
+    <div class="col-lg-3">
+      <div id="tree_connection_button">
+        <a href="{% url 'tree_connection' story.id %}" >
+          <button id="box-treeconnection" class="box-option btn btn-default">
+            Connection tree
+          </button>
+        </a>
+      </div>
+      <!--
+      <div id="tree_connection_auxbutton">
+          <button title="You need to create an initial node and , at least, one ending node." id="box-treeconnection-aux" class="box-option btn btn-default">
+            Connection tree
+          </button>
+      </div>
+    -->
+    </div>
+    <div class="col-lg-3">
+      <a href="{% url 'admin_viewer' story.id %}" >
+        <button id="box-preview" class="box-option btn btn-default">
+          Preview
+        </button>
+      </a>
+    </div>
+    <div class="col-lg-3">
+      <a href="#confirm-publish-modal" data-toggle="modal">
+        <button id="box-publish" class="box-option btn btn-default">
+          Publish
+        </button>
+      </a>
+    </div>
+</div>
+		<!-- Take the project from the database -->
+  <div class="row">
+
+    <div class="form-horizontal">
+    <!-- Take the project from the database -->
+    <h4> Nodes: </h4>
+    <fieldset class="list-elements well">
+   {% for node in nodes %}
+      <div class="col-lg-3">
+        <div class="icon-delete">
+          <i class="glyphicon glyphicon-remove-circle" id="deletenode-{{node.id}}"></i>    
+        </div>
+        <div class="icon-nodecopy">
+            <i class="glyphicon glyphicon-tags" id="copynode-{{node.id}}-{{node.type}}"></i>       
+        </div>
+        <div class="icon-node-edit">
+            <i class="glyphicon glyphicon-cog" id="editnode-{{node.id}}"></i>       
+        </div>
+         <a href="{% url 'admin_storybuilder' story.id node.id %}">
+        {% if node.type == 1 %}
+            <button class="box-unfinish btn btn-success" id="node-{{node.id}}" >
+        {% elif node.type == 2 %}
+          <button class="box-unfinish btn btn-warning" id="node-{{node.id}}">
+        {% else %}
+            <button class="box-unfinish btn btn-info" id="node-{{node.id}}">
+        {% endif %}       
+              {{node.name}}
+            </button>
+            <input type="hidden" class="node-type" value="{{node.type}}">
+          </a>
+      </div>  
+    {% endfor %}   
+    </fieldset>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+  <div class="modal fade" id="newstoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create a new node</h4>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'admin_edit_story' story.id %}" class="form-horizontal" method="POST" >
+					{% csrf_token %}
+  					<fieldset >
+    					<div class="warning-message">{{message}}</div>
+    					<div class="form-group">      				
+    						<div class="col-lg-5 col-lg-offset-4">
+      							<label for="inputName">Node name</label>
+      							<input type="text" required="required" class="form-control" name="name" maxlength="80" id="inputName" placeholder="Node name"> 
+      						</div>
+					   	</div>
+              <!--
+               <div class="form-group">   
+                <div class="col-lg-12">
+                  <label for="editInputColor">Select Color for options in the node:</label>
+                  <input class="color {hash:true}" id="editInputColor" value="{{project.color_theme}}" name="colorpicker" style="width:100px;border:1px solid gray;">
+                <div>        
+              </div> 
+            -->
+    					<div class="form-group">   
+    						<div class="col-lg-12">   						      						
+      							<label for="inputDescription">Description</label>
+      							<textarea style="resize:vertical;" class="form-control" name="description" maxlength="255" id="inputDescription" placeholder="Add a description of the node..."></textarea>      		
+      						</div>				
+    					</div>    
+              <div class="form-group">              
+                <div class="col-lg-5 col-lg-offset-4">
+                  <div class="radio" id="initial-node-section">
+                    <label>
+                      <input type="radio" required="required" name="optionsNode" id="optionsNode1" value="1" >
+                      Initial Node
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" required="required" name="optionsNode" id="optionsNode2" value="2" >
+                      Ending Node
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" required="required" name="optionsNode" id="optionsNode0" value="0" checked>
+                      Normal node
+                    </label>
+                  </div>               
+                </div>
+              </div>
+    					<div style="text-align:center;">
+    						<br>
+    						<div class="col-lg-12" style="margin-top:10px;">
+    							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          					<button type="submit" name="save-node" class="btn btn-primary">Save</button>
+
+        	  				</div>
+    					</div>					    					
+    					
+  					</fieldset>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+<!-- Modal -->
+  <div class="modal fade" id="editNodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Edit node</h4>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'admin_edit_story' story.id %}" class="form-horizontal" method="POST" >
+          {% csrf_token %}
+            <fieldset >
+              <div class="warning-message">{{message}}</div>
+              <div class="form-group">              
+                <div class="col-lg-5 col-lg-offset-4">
+                    <label for="editInputName">Node name</label>
+                    <input type="text" required="required" class="form-control" name="name" maxlength="80"  id="editInputName" placeholder="Node name"> 
+                  </div>
+              </div>
+              <div class="form-group">   
+                <div class="col-lg-12">
+                  <label for="editInputColor">Select Color for options in the node:</label>
+                  <input class="color {hash:true}" id="editInputColor" name="colorpicker" style="width:100px;border:1px solid gray;">
+                <div>        
+              </div>         
+              <div class="form-group">   
+                <div class="col-lg-12">                                 
+                    <label for="editInputDescription">Description</label>
+                    <textarea style="resize:vertical;" class="form-control" name="description" maxlength="255" id="editInputDescription" placeholder="Add a description of the node..."></textarea>         
+                  </div>        
+              </div>       
+              <input type="hidden" name="editNodeId" id="editNodeId">     
+              <div style="text-align:center;">
+                <br>
+                <div class="col-lg-12" style="margin-top:10px;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="edit-node" class="btn btn-primary">Save</button>
+                </div>
+              </div>                        
+              
+            </fieldset>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <!-- Confirm publish story -->
+  <!-- Modal -->
+  <div class="modal fade" id="confirm-publish-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Confirm the publish</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="col-lg-12">
+              <h4>Do you want to publish this story?</h4>
+            </div>
+             <div class="col-lg-5 col-lg-offset-3" style="margin-bottom:10px;">
+              <label for="publish-story-name"> Name story to publish:</label>
+              <input type="text" id="publish-story-name" class="form-control"  maxlength="20" name="publish-story-name" value="{{story.name}}"></input>
+             </div>
+             <br>
+            <div class="col-lg-5 col-lg-offset-4">            
+              <button class="btn btn-primary" id="yes-publish" value="{{story.id}}">Yes </button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal" id="no-publish">No </button>
+            </div>
+          </div>
+          <h6> The current story will be published, leaving a copy on the unfinished section. </h6>
+        </div>          
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- Confirm publish story -->
+  <!-- Modal -->
+  <div class="modal fade" id="confirm-copynode-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Confirmation to duplicate the node</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="col-lg-12">
+              <h4>Do you want to duplicate this node?</h4>
+            </div>
+             <div class="col-lg-5 col-lg-offset-3" style="margin-bottom:10px;">
+              <label for="copy-node-name"> Name node:</label>
+              <input type="text" id="copy-node-name" class="form-control"  maxlength="20" name="copy-node-name" value=""></input>
+             </div>
+             <br>
+            <div class="col-lg-5 col-lg-offset-4">            
+              <button class="btn btn-primary" id="yes-copynode" value="{{story.id}}">Yes </button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal" id="no-publish">No </button>
+            </div>
+          </div>
+        </div>          
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<input type="hidden" id="story-id" value="{{story.id}}">
+{% endblock %}

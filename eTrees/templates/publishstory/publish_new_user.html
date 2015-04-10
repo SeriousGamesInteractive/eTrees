@@ -1,0 +1,119 @@
+{% extends "base_admin.html" %}
+
+{% block extracss %}
+{% endblock %}
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/frontend/publishnewuser.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+	<h3> Create new user(s)</h3>
+	<h4> You will create a new user to assign it a story. </h4>
+  <div class="warning-message">{{message_import_error}}</div>
+  <div class="success-message">{{message_success}}</div>
+	<div class="col-lg-6">	
+  	 <form action="{% url 'admin_publish_new_user' %}"class="form-horizontal" method="POST" >
+			{% csrf_token %}
+  			<fieldset>
+  			<div style="margin-left:60px;margin-top:20px;">    			
+    			<div class="form-group">      				    				
+      				<label for="inputName" class="col-lg-3">First name*:</label>
+              <div class="col-lg-6">
+      					<input type="text" required="required" class="form-control" name="name" maxlength="20" id="inputName" placeholder="Name"> 
+      				</div>
+			   	</div>
+			   	<div class="form-group">      				    				
+      					<label for="inputSurname" class="col-lg-3">Surname*:</label>
+              <div class="col-lg-6">
+      					<input type="text" required="required" class="form-control" name="surname" maxlength="255" id="inputSurname" placeholder="Surname"> 
+      				</div>
+				  </div>
+          <div class="form-group">                          
+                <label for="inputUsername" class="col-lg-3">Username*:</label>
+              <div class="col-lg-6">
+                <input type="text" required="required" class="form-control" name="username" maxlength="255" id="inputUsername" placeholder="Username"> 
+              </div>
+          </div>
+          <div class="form-group">                              
+              <label for="inputEmail" class="col-lg-3">E-mail*:</label>
+              <div class="col-lg-6">
+                <input type="email" required="required" class="form-control" name="email" maxlength="255" id="inputEmail" placeholder="example@mail.com">                 
+              </div>
+          </div>
+          <div class="form-group">                            
+                 	<label class="col-lg-3">Sex*: </label>
+                    <div class="col-lg-6">
+                	<div class="radio-inline">
+                    	<label for="inputSex0">
+                    		<input type="radio" name="sex" value="m"  id="inputSex0" checked> Male
+                    		
+                    	</label>
+                	
+                    	<label for="inputSex1" style="margin-left:50px;">
+                    		<input type="radio" name="sex" value="f"  id="inputSex1" > Female
+                    		
+                    	</label>
+                	</div>
+                	
+                </div>	
+              </div>  
+                   
+          <h4> Optional information </h4>
+          <div class="form-group">      				    				
+      			<label for="inputPersonid" class="col-lg-3 optional-form">Company ID:</label>
+            <div class="col-lg-6">
+      				<input type="text" class="form-control" name="personid" maxlength="20" id="inputPersonid" placeholder="Company internal ID"> 
+      			</div>
+			   	</div>
+          <!--
+			   	<div class="form-group">      				    				
+      			<label for="inputBDate" class="col-lg-3 optional-form">Birthday:</label>
+            <div class="col-lg-6">
+      					<input type="date" class="form-control" name="bdate"  id="inputBDate" placeholder="dd/mm/yyyy"> 
+      			</div>
+			   	</div>
+         -->
+			   	<div class="form-group">   
+    				<div class="col-lg-9">   						      						
+      					<label for="inputAdditionalinfo" class="optional-form">Additional info:</label>
+      					<textarea style="resize:vertical;" class="form-control" name="additionalinfo" maxlength="255" id="inputAdditionalinfo" placeholder="Add  aditional information..."></textarea>      		
+      			</div>				
+    			</div>
+    			<div style="text-align:center;">
+    				<br>
+    				<div class="col-lg-3" style="margin-left:-15px;">
+	          	<button type="submit" id="more-import-user" class="btn btn-success">Create user</button>
+        	  </div>
+    			</div>					    					
+    		   </div>
+
+  			</fieldset>			
+       </form>
+   </div>
+   <div class="col-lg-4">
+   	<p>	If you have a list of users in csv-format 
+		you can load them directly into the system. Press the button below for this 
+		option.
+	</p>
+  
+	<button class="btn btn-default" id="import-more" >More... </button>
+	<div id="import-user">
+		 <form action="{% url 'admin_publish_new_user' %}" enctype="multipart/form-data" class="form-horizontal" method="POST" >
+			{% csrf_token %}
+  			<fieldset >    			
+    			<div class="col-lg-8">
+					   <label for="file_import"> Load file (csv): </label>
+					   <input type="file" class="form-control" name="file_import" id="file_import" >
+				  </div>
+				<div class="col-lg-12" style="margin-top:10px;">
+	          		<button type="submit" id="more-import-user" class="btn btn-success">Import user</button>
+        	  	</div>
+  			</fieldset>			
+       </form>
+	</div>
+   </div>
+    </div>
+</div>
+{% endblock %}

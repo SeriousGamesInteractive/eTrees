@@ -1,0 +1,84 @@
+{% include 'base_admin.html' %}
+{% block extracss %}
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/tree/base.css"/>
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/jquery-impromptu.css"/>
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/playground.css"/>
+{% endblock %}
+{% block extrascript %}
+	
+    <script src="{{ STATIC_URL }}js/kinetic-v4.5.5.min.js"></script> 
+    <script src="{{ STATIC_URL }}js/jquery-impromptu.js"></script> 
+    <script src="{{ STATIC_URL }}js/tree/treeajax.js"></script> 
+    <script src="{{ STATIC_URL }}js/tree/base.js"></script>
+{% endblock %}
+{% block content %}
+
+
+<div class="container" >
+	<div id="temp-message-error" style="color:red;">{{message_error}}</div>
+	<div class="row" style="margin-bottom:10px;">
+		<div class="col-lg-1 col-lg-offset-2">
+    	<button class="btn btn-default" id="zoom-in" >Zoom in</button>
+   	</div>
+   	<div class="col-lg-1">
+    	<button class="btn btn-default" id="zoom-out" >Zoom out</button>
+   	</div>
+   	<div class="col-lg-1 col-lg-offset-1">
+    	<button class="btn btn-default" id="clear-all" >Clear all</button>
+   	</div>
+		<div class="col-lg-1 ">
+    	<button class="btn btn-default" id="clear">clear connections</button>
+   	</div>
+   		   		
+    <div class="col-lg-1 col-lg-offset-1">
+      <form action="{% url 'tree_connection' story %}" id="submit-tree" class="form-horizontal" method="POST" >
+        {% csrf_token %}
+        <input type="submit" class="btn btn-success" id="final-save" value="Save" >
+      </form>
+    </div>
+ 	</div>
+	<div class="row">
+
+		<div id="node_list" class="col-lg-4">
+      <input type="text" class="form-control" id="searchNode" placeholder="Search node">
+      <br>
+			<div id="head_list">Node list</div>
+      <div id="node_content">
+        <ul class="list">
+          {%for node in nodes %}
+            <li>
+              {% if node.type == 0 %} <!-- normal node 0-->
+                <button class="element_list btn btn-info node_name" id="node{{node.id}}" value="{{node.id}}"> {{node.name}}</button>
+              {% elif node.type == 1 %} <!-- initial node 1-->
+                <button class="element_list btn btn-success node_name" id="node{{node.id}}" value="{{node.id}}" > {{node.name}}</button>
+              {% else %} <!-- ending node 2 -->
+                <button class="element_list btn btn-warning node_name" id="node{{node.id}}" value="{{node.id}}" > {{node.name}}</button>
+              {% endif %}
+  			     </li>
+          {% endfor %}
+        <ul>
+      </div>
+		</div> 
+	<div id="canvas" class="col-lg-8" ></div>
+	
+    <!-- <div id="info_canvas" class="col-lg-12"></div> -->
+  </div>
+	<!-- <canvas id="canvasPlay" width="578" height="200"></canvas> -->
+
+</div>
+ <!-- Modal -->
+  <div class="modal fade" id="nodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="modal-title"></h4>
+        </div>
+        <div class="modal-body"> 
+                 
+        </div>        
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<input type="hidden" value="{{story}}" id="project_id">
+{% endblock %}

@@ -1,0 +1,6 @@
+Publish story:
+	1- Request AJAX to the api: requestPublishStory send projectId
+	2- Create a new table Project name "pProject" and create a new folder with the ID of the project table
+	3- Copy all the content of the project to the new table "pProject"
+	4- Get all the nodes from the project and duplicate them in new Node tables.
+	5- It has to be duplicated the xml files for each node in this case with the id of the new table.

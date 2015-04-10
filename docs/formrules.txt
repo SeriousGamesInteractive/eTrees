@@ -1,0 +1,4 @@
+Exception for formularies:
+
+	User game control: 
+		- username uniques field let every type of username or limitate with case sensitive. Avoid weird characters

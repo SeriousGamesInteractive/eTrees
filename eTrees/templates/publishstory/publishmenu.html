@@ -1,0 +1,66 @@
+{% extends "base_admin.html" %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/publishbase.css"/>
+
+{% endblock %}
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/frontend/publishmenu.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <h2>Published stories</h2>
+    Select the options to expand the stories.
+    <div id="temp-message-error" style="color:red;">{{message_error}}</div>
+  </div>
+	<div class="row">
+		<div class="col-lg-4 ">
+			<a href="{% url 'admin_publish_new_user' %}" >
+				<button  id="box-newstory" class="box-option btn btn-default">
+					Create a new user(s) 
+				</button>
+			</a>
+		</div>
+    <div class="col-lg-4 ">
+      <a href="{% url 'admin_publish_invite_user' %}" >
+        <button  id="box-library" class="box-option btn btn-default">
+          Invite user(s) to stories 
+        </button>
+      </a>
+    </div>
+    <div class="col-lg-4">
+      <a href="{% url 'admin_publish_reporting' %}">
+        <button  id="box-library" class="box-option btn btn-default">
+          See reports 
+        </button>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="form-horizontal">
+		<!-- Take the project from the database -->
+    <h4> Stories: </h4>
+    <fieldset class="list-elements well">
+    {% for story in stories %}
+		  <div class="col-lg-3">
+        {% if story.canDelete %}
+          <div class="icon-delete">
+            <i class="glyphicon glyphicon-remove-circle" id="deletenode-{{story.id}}"></i>
+          </div>  
+        {% endif %}  
+			 <a href="{% url 'admin_viewer' story.id %}" >
+				  <button class="box-unfinish btn btn-success">
+			 		  {{story.name}}
+				</button>
+			 </a>
+		  </div>	
+		{% endfor %}     
+  </fieldset>
+  </div>
+	</div>
+</div>
+{% endblock %}

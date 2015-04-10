@@ -1,0 +1,89 @@
+/****************************************************************************
+	library page HTML
+******************************************************************************/
+
+#library_list{
+	max-height: 300px;
+}
+
+/****************************************************************************
+	newlibary page HTML
+******************************************************************************/
+.table-striped {
+	margin-left:90px;
+
+}
+.table-library{
+	
+	display: block;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+.asset-content{
+	cursor:pointer;
+	font-size:18px;
+	font-style: italic;
+	width:100%;
+}
+.asset-content:hover {
+	background-color: #aaaaaa;
+}
+
+.asset-content-nomodal{
+	cursor:pointer;
+	font-size:18px;
+	font-style: italic;
+	width:100%;
+}
+.asset-content-nomodal:hover {
+	background-color: #aaaaaa;
+}
+.asset-section{
+	min-height:250px;
+}
+.multiple-upload{
+	margin-top:50px;
+}
+.vertical-align-asset{
+	margin-top: 40px;
+}
+#asset-content-body{
+	text-align:center;
+	height: 0%;
+}
+
+
+/* Let's get this party started */
+/*
+::-webkit-scrollbar {
+    width: 12px;
+}
+ */
+/* Track */
+/*
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+*/
+ 
+/* Handle */
+/*
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(255,0,0,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(255,0,0,0.4); 
+}
+*/
+/******** modal content-assets-modal modification ***/
+
+.modal {
+	position:fixed;
+}
+

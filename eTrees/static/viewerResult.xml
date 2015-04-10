@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	
+	<starttime> 1389878518 </starttime>
+	
+	<nodes>
+		
+		<node>
+			<nodeid> 1 </nodeid>
+			<option>b</option>
+		</node>
+		
+		<node>
+			<nodeid> 2 </nodeid>
+			<option>b</option>
+		</node>
+		
+		<node>
+			<nodeid> 3 </nodeid>
+			<option>b</option>
+		</node>
+		
+		
+		<node>
+			<nodeid> 4 </nodeid>
+			<option></option>
+		</node>		
+	</nodes>
+</root>

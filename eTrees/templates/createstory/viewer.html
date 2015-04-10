@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block extrascript %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script type="text/javascript">
+		
+		var flashvars = {
+		//basePath:"http://www.thisdomaindoesnotexistsgi.com",
+      		basePath:"{{SITE_URL}}",
+      		//nodeType:"{{node.type}}", 
+      		flashFolder:"{{flashFolder}}",     		
+      		xmlNode: "{{nodeFile}}",
+      		postUrl: "{{postURL}}",
+      		nodeId:"{{nodeId}}"
+		};
+		
+		var params = {
+			   	path: "false",
+			   	scale: "noScale",
+			   	quality : "high",
+			   	allowFullscreen: "true",
+				allowScriptAccess: "always",
+				bgcolor: "",
+				wmode: "direct" // can cause issues with FP settings & webcam
+		};
+
+		var attributes = {
+				id:"flashContent",
+				name:"flashContent"
+		};
+		var nc = new Date();
+		nc = nc.getTime();
+		swfobject.embedSWF("{{STATIC_URL}}flash/viewer/main.swf?nc="+nc, "flashContent",  "100%",  "100%", "11.5.0", false, flashvars, params, attributes);
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="flashContainer" style="width:100%; height:100%;margin-top:-20px;">
+	<div id="flashContent" >
+		<h1>Alternative content</h1>
+			<p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" 	alt="Get Adobe Flash player" /></a></p>
+		</div>
+</div>
+{% endblock %}

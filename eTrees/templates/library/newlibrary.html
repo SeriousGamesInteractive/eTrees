@@ -1,0 +1,271 @@
+{% include "base_admin.html" %}
+{% load library_extras %}
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/library.css"/>
+
+
+{% endblock %}
+{% block extrascript %}
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.blueimp-gallery.min.js"></script>
+
+    <script src="{{ STATIC_URL }}js/frontend/newlibrary.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+	
+		<h3>Manage Library</h3>
+		<h5 class="messages" style="color:red;">{{message}}</h5>
+		<h5 class="messages" style="color:green;">{{messagegreen}}</h5>
+		<ul id="libraryTab" class="nav nav-tabs">
+			<li><a data-toggle="tab" id="audio-tab" href="#audio-content">Audio</a></li>
+			<li><a data-toggle="tab" id="graphic-tab" href="#graphic-content">Graphic</a></li>
+			<li><a data-toggle="tab" id="animation-tab" href="#animation-content">Animation</a></li>
+			<li><a data-toggle="tab" id="background-tab" href="#background-content">Background</a></li>
+		</ul>
+	<!-- The blueimp Gallery widget -->
+	<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" >
+    	<div class="slides"></div>
+    	<h3 class="title"></h3>    	
+    	<a class="close">×</a>
+    	<a class="play-pause"></a>
+	</div>
+	<div id="myTabContent" class="row admin-bar tab-content">
+		<div class="tab-pane fade"id="audio-content">
+			<h3>Audio Content</h3>
+			<form action="#" method="POST" enctype="multipart/form-data" id="audioForm" class="inter-bar col-lg-offset-3">
+					{% csrf_token %}
+						<div class="col-lg-offset-3 asset-section">
+							
+							<div class="row">
+
+								<br>
+								
+								<div class="col-lg-8 multiple-upload">
+									<label for="file_audio_multiple"> Upload multiple audio files (mp3): </label>
+									<input type="file" class="form-control" name="file_audio_multiple" id="file_audio_multiple" multiple>
+								</div>
+							
+							</div>	
+							<br>							
+								<input type="submit" class="btn btn-primary" value="Upload file">
+								<input type="hidden" name="form-type" value="audio">
+					</div>
+					
+			</form>
+			<div class="col-lg-offset-2 col-lg-7">
+				<table class="table table-striped ">
+					<thead>
+						<tr>
+							<th>File name</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class="table-library">
+						{% for audio in audiolist %}
+						
+	               			<tr id="row_audio_{{audio.id}}" >
+	            	        	<td class="asset-content">{{audio.name}}</td>
+	        	            	<td ></td>
+	    	                	<td style="text-align:right;">
+		                    	{% if library.inUse > 0 %}
+	                    			<i  class="glyphicon glyphicon-lock icon-setting" title="This library cannot be removed, &#13;&#10; one or more stories are using it">
+	                    		{% else %}
+		                	   		<button  class="btn btn-danger delete-button" id="audio-{{audio.id}}">Delete</button>
+	                	    	{% endif %}	
+	            	        	</td>
+		    	            </tr>
+	    	            {% endfor%}
+                    </tbody>
+				</table>
+			</div>
+			
+		</div>
+		<div class="tab-pane fade" id="graphic-content">
+
+			<h3>Graphic Content</h3>
+
+			<form action="#" method="POST" enctype="multipart/form-data" id="graphicForm" class="inter-bar col-lg-offset-3">
+					{% csrf_token %}
+						<div class="col-lg-offset-3 asset-section">
+							
+							<div class="row">
+															
+									<br>
+									
+									<div class="col-lg-8 multiple-upload">
+										<label for="file_graphic_multiple"> Upload multiple graphics file (png/jpeg): </label>
+										<input type="file" class="form-control" name="file_graphic_multiple" id="file_graphic_multiple" multiple>
+									</div>
+							</div>
+							<br>							
+								<input type="submit" class="btn btn-primary" value="Upload file">
+								<input type="hidden" name="form-type" value="graphic">
+					</div>
+					
+			</form>
+			<div class="col-lg-offset-2 col-lg-7">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>File name</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class="table-library">
+						{% for graphic in graphiclist %}
+	               		<tr id="row_graphic_{{graphic.id}}" > 
+	                    	<td class="asset-content-nomodal"><a href="{{graphic.pathFile|createurl}}" title="{{graphic.name}}" download="{{graphic.name}}" data-gallery>{{graphic.name}}</a></td>
+	                    	<td > </td>
+	   	                	<td style="text-align:right;">
+	                    	{% if library.inUse > 0 %}
+	                    		<i  class="glyphicon glyphicon-lock icon-setting" title="This library cannot be removed, &#13;&#10; one or more stories are using it">
+	                    	{% else %}
+	                    		<button  class="btn btn-danger delete-button" id="graphic-{{graphic.id}}">Delete</button>
+	                    	{% endif %}	
+	   	                		</td>
+		                </tr>
+	                	{% endfor%}
+            		</tbody>
+				</table>
+			</div>
+		
+		</div>
+		<div class="tab-pane fade" id="animation-content">
+			<h3>Animation Content</h3>
+			<form action="#" method="POST" enctype="multipart/form-data" id="animationForm" class="inter-bar col-lg-offset-3">
+					{% csrf_token %}
+						<div class="col-lg-offset-3 asset-section">
+							
+							<div class="row">
+								
+								<br>
+									
+								<div class="col-lg-8 multiple-upload">
+									<label for="file_animation"> Upload animation file (swf): </label>
+									<input type="file" class="form-control" name="file_animation_multiple" id="file_animation" multiple>
+								</div>
+							</div>	
+							<br>							
+								<input type="submit" class="btn btn-primary" value="Upload file">
+								<input type="hidden" name="form-type" value="animation">
+					</div>
+					
+			</form>
+			<div class="col-lg-offset-2 col-lg-7">
+				<table class="table table-striped ">
+					<thead>
+						<tr>
+							<th>File name</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class="table-library">
+						{% for animation in animationlist %}
+		               		<tr id="row_animation_{{animation.id}}" >
+		                    	<td class="asset-content">{{animation.name}}</td>
+		                    	<td ></td>
+		                    	<td style="text-align:right;">
+		                    	{% if library.inUse > 0 %}
+		                    		<i  class="glyphicon glyphicon-lock icon-setting" title="This library cannot be removed, &#13;&#10; one or more stories are using it">
+		                    	{% else %}
+		                    	<button class="btn btn-danger delete-button" id="animation-{{animation.id}}">Delete</button>
+		                    	{% endif %}
+		                    		</td>
+			                </tr>
+		                {% endfor%}
+		            </tbody>
+				</table>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="background-content">
+			<h3>Background Content</h3>
+			<form action="#" method="POST" enctype="multipart/form-data" id="backgroundForm" class="inter-bar col-lg-offset-3">
+					{% csrf_token %}
+						<div class="col-lg-offset-3 asset-section">
+							
+							<div class="row">						
+								<br>
+									<div class="col-lg-8 multiple-upload">
+										<label for="file_background"> Upload background file (png/jpeg): </label>
+										<input type="file" class="form-control" name="file_background_multiple" id="file_background_multiple" multiple>
+									</div>
+							</div>
+							<br>							
+								<input type="submit" class="btn btn-primary" value="Upload file">
+								<input type="hidden" name="form-type" value="background">
+					</div>
+					
+			</form>
+			<div class="col-lg-offset-2 col-lg-7">
+				<table class="table table-striped ">
+					<thead>
+						<tr>
+							<th>File name</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class="table-library">
+						{% for background in backgroundlist %}
+	               		<tr id="row_background_{{background.id}}" >
+	                    	<td class="asset-content-nomodal"><a href="{{background.pathFile|createurl}}" title="{{background.name}}" download="{{background.name}}" data-gallery>{{background.name}}</a></td>
+	                    	<td ></td>
+	                    	<td style="text-align:right;">
+	                    	{% if library.inUse > 0 %}
+	                    		<i  class="glyphicon glyphicon-lock icon-setting" title="This library cannot be removed, &#13;&#10; one or more stories are using it">
+	                    	{% else %}
+	                    		<button class="btn btn-danger delete-button" id="background-{{background.id}}">Delete</button>
+	                    	{% endif %}	
+	                    		</td>
+		                </tr>
+	                	{% endfor%}
+	                </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-offset-11">
+		<a href="{% url 'admin_library'%}" class="btn btn-primary"> Save library</a>
+	</div>
+	<input type="hidden" id="saved-asset" value="{{type}}">
+	<!-- Modal -->
+  <div class="modal fade" id="messageModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<!-- MODAL TO SHOW THE CONTENT OF THE ASSETS -->
+  <div class="modal fade" id="content-assets-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="asset-content-title"></h4>
+        </div>
+        <div class="modal-body" id="asset-content-body">
+
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</div>
+<input type="hidden" value="{{library.id}}" id="library-id">
+{% endblock %}

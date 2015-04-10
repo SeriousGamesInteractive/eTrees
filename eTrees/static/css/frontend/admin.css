@@ -1,0 +1,95 @@
+.admin-bar {
+	background-color: #dddddd;
+	border-radius: 10px;
+	overflow: auto;
+	min-height:200px;
+}
+
+.inter-bar {
+	background-color: #cccccc;
+	max-width: 600px;
+	min-height: 200px;
+	border-radius: 10px;
+
+}
+
+.table {
+	
+	margin-top:20px;
+	width:90%;
+	background-color: #cccccc;
+
+}
+/*
+.table th{
+	background-color: red;
+}
+*/
+.list-elements{
+	overflow: auto;
+	max-height: 402px;
+	padding: 25px;
+}
+
+.box-menu {
+	text-align:center;
+	min-width:60%;
+	height: 180px;
+	color:white;
+}
+.box-option{
+	text-align:center;
+	font-size:20px;
+	min-width:100%;
+	height: 240px;
+	color:white;
+	margin-bottom:20px;
+	margin-top:20px;
+}
+
+
+.box-unfinish {
+	text-align:center;
+	min-width:100%;
+	height: 140px;
+	color:white;
+	margin-bottom: 15px;
+}
+
+.warning-message{
+	display:hidden;
+	color:#d43f3a;
+	font-size:14px;
+	font-style:italic;
+}
+.warning-password-message{
+	display:hidden;
+	color:#d43f3a;
+	font-size:14px;
+	font-style:italic;
+}
+.success-message{
+	display:hidden;
+	color:#3ad43a;
+	font-size:14px;
+	font-style:italic;
+}
+/* Overwritting bootstrap css */
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus{
+	background-color: #dddddd;
+}
+
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+  vertical-align: middle;
+}
+
+.tab-pane {
+	margin-left: 10px;
+}

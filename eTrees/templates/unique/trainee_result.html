@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block extracss %}
+  	<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/trainee_result.css"/>
+{% endblock %}
+{% block extrascript %}
+	<script src="{{ STATIC_URL }}js/jquery.raty.min.js"></script>
+{% endblock %}
+	
+{% block content %}
+
+<div class="container">
+	<div class="row" style="text-align:center;" >
+		<div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3 title-container">
+			<h1> {{project.name}} summary of results</h1>
+			
+		</div>
+		</br>
+		<div class="clearfix"></div>
+			<div class="col-lg-4 col-md-4">
+				<h4> You score </h4>
+				<div class="bs-table">
+					<table class="table table-bordered">
+						<thead>
+							<tr >
+								<th class="cell-table">Name Category</th>
+								<th class="cell-table">Value</th>
+							</tr>
+						</thead>	
+						<tbody>
+							{% for key, value in reportCategories.items %}
+								<tr >
+									<th class="cell-table"><h5>{{key}}</h5></th>
+									<th class="cell-table"><h5>{{value}}</h5></th>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-lg-offset-2 col-md-offset-2" style="text-align:center;">
+				<h4> Categories </h4>
+					<table class="table table-bordered bs-table">
+						<thead>
+							<tr>
+								<th class="cell-table">Name</th>
+								<th class="cell-table">Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for category in categories %}
+								<tr >
+									<th class="cell-table"><h5>{{category.name}}</h5></th>
+									<th class="cell-table"><h5>{{category.description}}</h5></th>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				
+			</div>
+			<div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3" style="text-align:center;">
+				<h4>Trainer's Comments</h4>
+			 	<div id="comment-container" style="text-align:left;">
+					<h5>{{project.reflective|linebreaksbr}}<h5>
+				</div>
+			</div>
+
+		<div style="display:none">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">                                 
+	            <label for="inputComment">Comment</label>
+	            <textarea style="resize:vertical;" class="form-control" name="comment" maxlength="255" id="inputComment" placeholder="Add a comment of the story..."></textarea>          
+	        </div>   
+	        <div class="col-lg-10 col-md-10 col-sm-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
+	        	<h4>Rate the story</h4>
+	        	<div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-5" id="star"></div>
+	        </div>
+    	</div>
+		<div class="col-lg-12 col-ml-12 col-sm-12" style="margin-top:15px">
+			
+			{% if code == None %}
+				<form action="." method="POST">
+					{% csrf_token %}
+					<input type="submit" name="back-result" class="btn btn-primary" value="BACK">
+					
+				</form>
+			{% else %}
+
+				<a href="{% url 'unique_getfile' code %}">
+					<button class="btn btn-primary"> REPLAY </button>
+				</a>
+			{% endif %}
+		</div>
+		<div class="col-lg-12 col-ml-12 col-sm-12" style="margin-top:15px">
+			<img src="{{ STATIC_URL }}/img/logo.png">
+		</div>
+	</div>
+</div>
+{% endblock %}

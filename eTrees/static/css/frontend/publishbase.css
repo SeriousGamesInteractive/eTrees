@@ -1,0 +1,140 @@
+.user_invite{
+	margin-top:10px;
+	color:black;
+	font-size:14px;
+	text-align: left;
+	padding-bottom: 5px;
+	border-bottom: 1px solid black;
+	
+}
+#usergame-container {
+	max-height: 500px;
+	overflow: auto;
+	width:100%;
+}
+.invite-button {
+	text-align: left;
+	vertical-align: middle;
+	height: 30px;
+	width:50px;
+	float:right;
+}
+.box-story {
+	width:150px;
+	height:130px;
+	background-image:none;
+	border-radius:0;
+	border:1px solid transparent;
+
+}
+
+#select-add {
+	
+}
+.btn-user-not-add {
+	margin-left:20px;
+}
+
+.btn-user-add {
+	margin-left:20px;
+}
+
+.icon-num-users{
+	position:relative;
+	top:2px;
+	left:0px;
+	width:150px;
+	z-index:500;
+	background:#5cb85c;
+	border-radius: 2px;
+	text-align:right;
+	cursor:pointer;
+}
+
+.icon-num-users:hover{
+	color:white;
+}
+
+.icon-delete{
+	position:relative;
+	top:3px;
+	left:0px;
+	width:20px;
+	color:black;
+	text-align:center;
+	border-radius: 4px;
+	background-color: gray;
+	cursor:pointer;
+}
+
+.icon-delete:hover{
+	color:white;
+}
+
+
+/*****************************************
+	Invite user modal window style
+******************************************/
+
+.title-modal {
+	font-weight: bold;
+	margin-left: 5px;
+
+}
+
+.user-list-invited {
+	color:black;
+	background-color: white;
+	height:100px;
+	max-height: 100px;
+	border-radius: 4px;
+	overflow: auto;
+}
+
+.list {
+	list-style-type: none;
+    padding:0;
+    margin:0;
+}
+
+#extraMessage {
+	min-height: 80px;
+	max-width: 260px;
+	max-height: 85px;
+}
+
+/*****************************************
+*** CUSTOM MODAL
+*****************************************/
+
+/******* Modification of the modal window for bootstrap ****/
+.modal {
+	top:0;
+	left:0;
+	overflow: hidden;
+	width:300px;
+	height:375px;
+	background:#357ebd;
+	border-radius: 2em;
+	border:1px solid black;
+	color:white;
+}
+
+.modal-dialog {
+	width:300px;
+	height:250px;
+	padding:0px;
+
+}
+.modal-content {
+	background-color:#357ebd;	
+	box-shadow: none;
+	width:100%;
+	height:100%;
+	border:0;
+}
+
+.modal-backdrop.fade.in {
+	opacity:0;
+	filter: alpha(opacity=0);
+}

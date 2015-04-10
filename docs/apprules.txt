@@ -1,0 +1,9 @@
+Rules for the application:
+
+	1- Create a story needs the creation of a library
+	2- When the story is created the library cannot be deleted and its elements neither. You can add more elements to the library.
+	3- If you delete a node, it is neccessary to remove all the connection for that node?????
+	4- if the node is edited in the storybuilder section. Remove all connection created before on the connection tools, if they exist.
+	5- When you publish a story, the application will duplicate the tables in the database and the files related with the story.
+	6- The publish story will be seen in the publish story section and it will be possible to assign users.
+	7- 

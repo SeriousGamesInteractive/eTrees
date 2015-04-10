@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- mobile responsive -->
+<title>{% block title %} eTrees Accounts {% endblock %}</title>
+
+<link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap-glyphicons.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/normalize.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/slider.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/jquery-ui-1.10.3.custom.min.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/admin.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/base.css"/>
+{% block extracss %}
+    
+{% endblock %}
+<script src="{{ STATIC_URL }}js/polyfill/location-origin.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/underscore-min.js"></script>
+<script src="{{ STATIC_URL }}js/list.min.js"></script>
+<script src="{{ STATIC_URL }}js/handlebars-v1.3.0.js"></script>
+<script src="{{ STATIC_URL }}js/respond.min.js"></script> <!-- Use for IE8 and lower -->
+<script src="{{ STATIC_URL }}js/bootstrap-slider.js"></script>
+<script src="{{ STATIC_URL }}js/csrf.js"></script>
+
+{% block extrascript %}
+    
+{% endblock %}
+<!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+{% block extra-head %}{% endblock %}
+ <noscript>The use of this website require javascript, please activate the javascript option
+ or use a browser with javascript support</noscript>
+</head>
+{% if user.is_authenticated %}
+<body>
+	{% block navigation-bar %}
+	
+	<div class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="{% url 'admin_menu' %}">Home</a>
+			<ul class="nav navbar-nav">					
+				<li><a href="{% url 'admin_publish_menu' %}">Published stories</a>
+				<li><a href="{% url 'admin_edit_story_menu' %}">Unfinished stories</a>
+				<li><a href="{% url 'admin_account_menu' %}">Admin settings</a>
+			</ul>
+			<p class="navbar-text pull-right">Signed in as <a id="log-out"href="#" data-toggle="popover" data-placement="bottom"  class="navbar-link">"{{user.username}}"</a></p>
+		</div>
+	</div>
+	{% endblock %}
+	{% block content %}
+    {% endblock%}
+	
+	{% block footer %}
+  
+	{% endblock %} 
+	 
+</body>
+{% else %}
+<body>
+	You need to login. Click <a href="{% url 'home' %}"> here.</a>
+</body>
+{% endif %}
+<script type="text/javascript">
+ 	$(document).ready(function(){
+ 		$('#log-out').popover({
+ 			'selector': '',
+        	'placement': 'bottom',
+        	'title': "Log-out:",
+        	'content': "<a href=\"{% url 'admin_account_logout' %}\">click here</a>",
+        	'html': 'true',
+        	'trigger':'click'
+    	});
+ 	
+ 	});
+	
+</script>
+
+</html>

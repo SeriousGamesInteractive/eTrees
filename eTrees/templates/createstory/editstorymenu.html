@@ -1,0 +1,57 @@
+{% extends "base_admin.html" %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL}}css/jquery.simplecolorpicker.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/create_edit_story.css"/>
+{% endblock %}
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/frontend/editstorymenu.js"></script>
+  <script src="{{ STATIC_URL }}js/jcolor/jscolor.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <h2>UnPublished stories</h2>
+    Select the options to start creating a new story.
+  </div>
+	<div class="row">
+		<div class="col-lg-3 col-lg-offset-1">
+			<a href="{% url 'create_story' %}" data-toggle="modal">
+				<button  id="box-newstory" class="box-option btn btn-default">
+					Create a new story 
+				</button>
+			</a>
+		</div>
+    <div class="col-lg-3 col-lg-offset-3">
+      <a href="{% url 'admin_library' %}" data-toggle="modal">
+        <button  id="box-library" class="box-option btn btn-default">
+          Edit library 
+        </button>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="form-horizontal">
+		<!-- Take the project from the database -->
+    <h4> Stories: </h4>
+    <fieldset class="list-elements well">
+    {% for project in projects %}
+		  <div class="col-lg-3">
+      <div class="icon-copy">
+          <i class="glyphicon glyphicon-tags" id="copynode-{{project.id}}"></i>
+      </div>   
+			 <a href="{% url 'admin_edit_story' project.id %}">
+				  <button class="box-unfinish btn btn-success">      
+			 		  {{project.name}}
+				  </button>
+			 </a>
+		  </div>	
+		{% endfor %}     
+  </fieldset>
+  </div>
+	</div>
+</div>
+{% endblock %}

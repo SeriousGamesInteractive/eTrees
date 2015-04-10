@@ -1,0 +1,148 @@
+{% extends "base_admin.html" %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL}}css/jquery.simplecolorpicker.css"/>
+<link rel="stylesheet" href="{{ STATIC_URL}}css/frontend/create_edit_story.css"/>
+{% endblock %}
+{% block extrascript %}
+  <script src="{{ STATIC_URL }}js/frontend/create_edit_story.js"></script>
+  <script src="{{ STATIC_URL }}js/jcolor/jscolor.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <h2>{{header|default:"Create story"}}</h2>
+    Fill out the fields to {{header|default:"Create story"}}.
+  </div>
+	 <form id="form-createstory" action="{{ request.build_absolute_uri }}" class="form-horizontal" method="POST" ><!-- {% if project.id %} action ="/project/copy-story/{{project.id}}" {% else %} action="." {% endif %}  > -->
+          {% csrf_token %}
+            <fieldset >
+               <div class="warning-message">{{message}}</div>
+               <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">              
+                      <div class="col-lg-5 col-lg-offset-4">
+                          <label for="inputName">Name story*</label>
+                          <input type="text" required="required" value="{{project.name}}" class="form-control" name="name" maxlength="40" id="inputName" placeholder="Name story"> 
+                        </div>
+                    </div>
+                    <div class="form-group">              
+                      <div class="col-lg-5 col-lg-offset-4">
+                          <label for="inputTopic">Topic*</label>
+                          <input type="text" required="required" value="{{project.topic}}" class="form-control" name="topic" maxlength="255" id="inputTopic" placeholder="Topic story">                 
+                        </div>
+                    </div>
+                    <div class="form-group">              
+                      <div class="col-lg-5 col-lg-offset-4">
+                       
+                        <label for="select-library">Select library* (Shift + click):</label>
+                        {% if project.resourceslibrary %}
+                          <select multiple name="select-library" class="form-control" id="select-library" >
+                              {% for library in project.resourceslibrary.all %}
+                                  <option  disabled="disabled" class="disable-element"> {{library.name}}</option>                               
+                              {% endfor %} 
+                              {% for library in libraries %}
+                                <option value="{{library.id}}"> {{library.name}}</option> 
+                              {% endfor %}
+
+                          </select>
+                        {% else %}
+
+                          <select  multiple class="form-control" name="select-library" required="required"  id="select-library" >
+                              {% for library in libraries %}
+                                <option value="{{library.id}}"> {{library.name}}</option>
+                              {% endfor %}
+                          </select>
+                        {% endif %}                      
+                        </div>
+                    </div>
+                    <div class="form-group">              
+                      <div class="col-lg-5 col-lg-offset-4">
+                        <label for="select-color">Select theme color*:</label>                  
+                        <input class="color {hash:true}" readonly="true" value="{{project.color_theme}}" name="colorpicker" style="width:100px;border:1px solid gray;">             
+                        </div>
+                    </div>
+                    <div class="form-group">              
+                      <div class="col-lg-5 col-lg-offset-4">
+                        <label for="inputButtonNext">Default text for "next" button:</label>                  
+                        <input type="text" id="inputButtonNext" class="form-control"  value="next" name="next-button" maxlength="30" placeholder="Enter default button text">             
+                      </div>
+                    </div>
+                    <div class="form-group">   
+                      <div class="col-lg-12">                                 
+                          <label for="inputReflective">Comments</label>
+                          <textarea style="resize:vertical;" class="form-control" name="reflective" id="inputReflective" placeholder="Add a reflective question for this story...">{{project.reflective}}</textarea>          
+                       </div>        
+                    </div>
+                    <div class="form-group">   
+                      <div class="col-lg-12">                                 
+                          <label for="inputDescription">Description</label>
+                          <textarea style="resize:vertical;" class="form-control" name="description" maxlength="255" id="inputDescription" placeholder="Add a description of the story...">{{project.description}}</textarea>          
+                        </div>        
+                    </div>
+                    <div class="form-group"> 
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label for="trainers-list" class="control-label">Give access to the trainers (Shift + click to select multiple trainers): </label>
+                        <select multiple class="form-control" name="trainers" id="trainers-list">
+                            {% for trainer in trainers %}
+                              {% if trainer in project.user.all %}
+                                <option  disabled="disabled"> {{trainer.user.username}}</option>
+                              {% else %}  
+                                <option value="{{trainer.id}}">{{trainer.user.username}}</option>
+                              {% endif %}
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">              
+                    <div class="col-lg-5 col-lg-offset-4">
+                      <button type=button id="addCategory" class="btn btn-default" >Add category </button>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12" id="category-add">
+                  {% for category in categories %}
+                      <div class="form-group category-div group-category" >
+                      <div class="col-lg-4 col-md-4" >
+                        <label for="name-{{category.id}}">Category {{forloop.counter}}</label>
+                        <input type="text" class="form-control" value="{{category.name}}" name="name-{{category.id}}" maxlength="100" id="name-{{category.id}}" placeholder="Name category" >
+                      </div>
+                      <br>
+                      <div class="col-lg-3 select-category">
+                        <label for="maxvalue-{{category.id}}">Max value</label>
+                        <select name="maxvalue-{{category.id}}" id="maxvalue-{{category.id}}" disabled="disabled">
+                          <option>{{category.maxvalue}}</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-3 select-category">
+                      <label for="minvalue-{{category.id}}">Min value</label>
+                        <select name="minvalue-{{category.id}}" id="minvalue-{{category.id}}" disabled="disabled">
+                          <option>{{category.minvalue}}</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-1 col-md-1 button-del-category">
+                        <button class="btn btn-danger button-category" value="{{category.id}}">Del</button>
+                      </div>
+                       <div class="col-lg-12 col-md-12">
+                        <textarea style="resize:vertical;" class="form-control" name="descriptionCategory-{{category.id}}"  
+                        placeholder="Add a description of the category">{{category.description}}</textarea>
+                      </div>
+                    </div>
+                  {% endfor %}
+              </div>
+              </div>
+              <input type="hidden" name="numberCategories" id="numberCategories" value="{{categories|length}}">
+              <div style="text-align:center;">
+                <br>
+                <div class="col-lg-12" style="margin-top:10px;">
+                    <button type="submit" class="btn btn-primary" id="save-button"> Save</button>                    
+                </div>
+              </div>                        
+            </fieldset>
+      
+       </form>
+       
+      
+{% endblock %}
