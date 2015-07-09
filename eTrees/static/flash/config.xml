@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>				
+	<fonts>				
+		<swf sourcePath="font.swf">
+			<font>PtSerif_bold</font>
+			<font>PtSerif_reg</font>
+			<font>PtSans_bold</font>
+			<font>PtSans_reg</font>
+			<font>OpenSans_reg</font>
+			<font>OpenSans_extraBold</font>
+			<font>OpenSans_bold</font>
+			<font>montserrat_reg</font>
+		</swf>
+	</fonts>
+</data>
